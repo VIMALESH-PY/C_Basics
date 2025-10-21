@@ -18,7 +18,7 @@ void count(char str[])
 int main()
 {
 	int l;
-	printf("Enter the length of the string :");
+	printf("Enter the length of a string :");
 	scanf("%d",&l);
     char string[l+1];
     getchar();
