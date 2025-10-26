@@ -1,0 +1,153 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct lnode 
+{
+	int val;
+	struct lnode* next;
+};
+
+typedef struct lnode node ;
+node* head=NULL;
+node* tail=NULL;
+int len=0;
+
+void insert_at_end(int val)
+{
+	node* cur = (node*)malloc(sizeof(node));
+	cur -> val = val;
+	cur -> next =NULL;
+	if (head == NULL)
+		head = tail = cur;
+	else
+	{
+		tail->next = cur;
+		tail = cur;
+	}
+	len++;	
+}
+void insert_at_beg(int val)
+{
+	node* cur = (node*)malloc(sizeof(node));
+	cur -> val = val;
+	cur -> next = head ;
+	head = cur;
+	if (tail==NULL) tail = cur;
+	len++;
+}
+void insert(int val,int pos)
+{
+	if (pos<0 || pos >len )
+	{
+		printf("Invalid position !");
+		return;
+	}
+	if (pos == 0 ){
+	insert_at_beg(val);
+	return ;
+    }
+    if (pos == len){
+    	insert_at_end(val);
+    	return ;
+	}
+	node* cur = head;
+	for (int i = 0 ;i< pos-1;i++)
+		cur = cur->next;
+	node* ptr = (node*)malloc(sizeof(node));
+	ptr -> val = val;
+	ptr->next  = cur->next;
+	cur->next = ptr;
+	len++;
+}
+void display(node* head)
+{
+	node* cur = head;
+	while(cur)
+	{
+	printf("%d -> ",cur -> val);
+	cur = cur -> next;	
+	}
+	printf("Null");	
+}
+
+void ndelete(int pos)
+{
+	if (pos<0 || pos >len )
+	{
+		printf("Invalid position!");
+		return;
+	}
+	len--;
+	node* dum=(node*)malloc(sizeof(node));
+	dum->next=head;
+	node* cur=head ;
+	node* prev= dum;
+	int l=0;
+	while(cur)
+	{
+		if (pos==l)		
+		{
+			prev->next	= cur->next;
+			free(cur);
+			head=dum->next;
+			free(dum);
+			return;
+		}
+		cur=cur->next;
+		prev = prev->next;
+		l++;
+	}
+	len++;	
+}
+
+void reverse()
+{
+	node* cur=head;
+	node* prev = NULL;
+	node* temp = NULL;
+	while(cur)
+	{
+		temp = cur->next;
+		cur->next=prev;
+		prev= cur;
+		cur = temp;
+	head=prev;
+}
+}
+
+int main()
+{
+	int ch=1;
+	int pos,val;
+	while(ch != 5)
+	{
+		printf("\n1.Insert.");
+		printf("\n2.Delete.\n3.Display.\n4.Reverse.5.Exit.\n");
+		printf("Enter a choice :");
+		scanf("%d",&ch);
+		switch(ch)
+		{
+			case 1:
+				printf("\nEnter value and position(btw 0,%d) respectively :",len);
+				scanf("%d%d",&val,&pos);
+				insert(val,pos);
+				break;
+			case 2:
+				printf("\nEnter the position you want to delete (btw 0,%d):",len);
+				scanf("%d",&pos);
+				ndelete(pos);
+				break;
+			case 3:
+				display(head);
+				break;
+			case 4:
+				reverse();
+				break;
+			case 5:
+				continue;
+			default :
+				printf("\nPlease enter a correct choice!");
+		}
+	}
+	return 0;
+}
