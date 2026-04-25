@@ -70,7 +70,7 @@ void display(node* head)
 	printf("Null");	
 }
 
-void ndelete(int pos)
+void delete(int pos)
 {
 	if (pos<0 || pos >len )
 	{
