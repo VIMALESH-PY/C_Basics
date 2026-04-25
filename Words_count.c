@@ -5,15 +5,18 @@
 int word_count(char *str)
 {
 	int count=0,i=0;
-	if(str[i] == ' ')
-			while(str[i] == ' ')
-				i++;
+	
+	while(str[i] == ' ')
+		i++;
+	
 	int j=strlen(str)-1;
+	
 	while(str[j] == ' ')
 	{
 		j--;
 	    str[j] = '\0';
 	}
+	
 	while(i<strlen(str))
 	{
 		if(str[i] == ' ')
